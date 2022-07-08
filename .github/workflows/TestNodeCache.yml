@@ -1,0 +1,103 @@
+# This workflow will triage pull requests and apply a label based on the
+# paths that are modified in the pull request.
+#
+# To use this workflow, you will need to set up a .github/labeler.yml
+# file with configuration.  For more information, see:
+# https://github.com/actions/labeler
+
+name: TestNodeCache
+on: 
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: macos-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    strategy:
+      matrix:
+        node: [15.11.0]
+        ruby: [2.5.3]
+
+    steps:
+      - uses: actions/checkout@v3
+
+#       - name: Setup Ruby Pkgs
+#         uses: ruby/setup-ruby@477b21f02be01bcb8030d50f37cfec92bfa615b6
+#         with:
+#           ruby-version: ${{  matrix.ruby  }}
+#           bundler-cache: true
+      
+#       - name: Install cmake
+#         run: brew install cmake
+
+#       - name: Setup node
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: ${{ matrix.node }}
+      
+#       - name: Specifies that the npm version is 6.14.11
+#         run: npm i -g npm@6.14.11
+
+#       - name: Install node dependencies
+#         run: |
+#           npm i -g appium
+#           npm i -g appium-doctor
+#       - run: ls -l
+        
+#       - name: Install opencv
+#         run: |
+#           cp -R ${{ github.workspace }}/opencv-build /Users/runner/hostedtoolcache/node/15.11.0/x64/lib/node_modules/opencv-build
+#           cp -R ${{ github.workspace }}/opencv4nodejs /Users/runner/hostedtoolcache/node/15.11.0/x64/lib/node_modules/opencv4nodejs
+
+#       - name: Install opencv
+#         run: |
+#           npm install -g ./opencv-build
+#           npm install -g ./opencv4nodejs
+      
+#       - name: check opencv
+#         run: |
+#           npm list -g opencv4nodejs
+      
+#       - run: appium-doctor
+      
+      - name: Launch iOS Simulator(iphone 13, 15.2)
+        id: iphone13
+        uses: futureware-tech/simulator-action@v1
+        with:
+          model: 'iPhone 13'
+          os: 'iOS'
+          os_version: '^15.2'
+        
+#       - name: Launch iOS Simulator(iPad Pro (12.9-inch), 15.2)
+#         id: iPadpro
+#         uses: futureware-tech/simulator-action@v1
+#         with:
+#           model: 'iPad Pro (12.9-inch) (5th generation)'
+#           os: 'iOS'
+#           os_version: '^15.2'
+
+      - name: Get uuid by steps
+        run: |
+          echo "${{ steps.iphone13.outputs.udid }}"
+      
+#       - name: run appium
+#         run: |
+#           nohup appium -p 4723 &>./appium4723.log &
+      
+#       - name: run appium
+#         run: |
+#           nohup appium -p 4726 &>./appium4726.log &
+      
+#       - name: Upload a Build Artifact
+#         uses: actions/upload-artifact@v3.1.0
+#         with:
+#           name: appium_log_file_directory
+#           path: ./appium*.log
+      
+      - name: get path
+        run: |
+          which node 
+          pwd
