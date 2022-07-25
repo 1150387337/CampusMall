@@ -19,8 +19,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      
+      - name: get secrets JSON
+        run: each '${{ toJSON(secrets.MY_PASSWORD) }}'
 
       - name: get secrets password
-        run: |
-          which node 
-          pwd
+        run: each '${{ secrets.MY_PASSWORD }}'
