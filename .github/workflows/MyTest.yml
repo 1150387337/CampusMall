@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v3
       
       - name: get secrets JSON
-        run: each '${{ toJSON(secrets.MY_PASSWORD) }}'
+        run: each '${{ toJSON(secrets) }}'
 
       - name: get secrets password
         run: each '${{ secrets.MY_PASSWORD }}'
